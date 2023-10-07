@@ -1,40 +1,108 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>JSON Database Example</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Submit Data</title>
 </head>
-
 <body>
+  <form id="myForm">
+    <input type="text" name="name" placeholder="Enter name" required><br>
+    <input type="email" name="email" placeholder="Enter email" required><br>
+    <input type="submit" value="Submit">
+  </form>
 
-  <main>
-    <section>
-      <h2>Add New Record</h2>
+  <table id="recordsTable" border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Created At</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 
-      <form id="recordForm">
-        <label for="nameInput">Name:</label>
-        <input type="text" id="nameInput" name="name">
+  <script>
+    function fetchRecords() {
+      const url = 'https://felmomyinwjzbtvfyalv.supabase.co/rest/v1/records?select=*';
+      const apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlbG1vbXlpbndqemJ0dmZ5YWx2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5NjcxNDg0NywiZXhwIjoyMDEyMjkwODQ3fQ.NByj9GFB3SvVseGCBbSoYYOdMvmVyr0Vbd-4GuxAMOU';
+      const authorizationHeader = `Bearer ${apiKey}`;
+      const apiRequestOptions = {
+        headers: {
+          'apikey': apiKey,
+          'Authorization': authorizationHeader
+        }
+      };
 
-        <label for="emailInput">Email:</label>
-        <input type="email" id="emailInput" name="email">
+      fetch(url, apiRequestOptions)
+        .then(response => response.json())
+        .then(data => {
+          const tableBody = document.querySelector('#recordsTable tbody');
+          tableBody.innerHTML = ''; // Clear existing table rows
 
-        <button type="submit">Save Record</button>
-      </form>
-    </section>
+          data.forEach(record => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${record.id}</td>
+              <td>${record.name}</td>
+              <td>${record.email}</td>
+              <td>${record.created_at}</td>
+            `;
+            tableBody.appendChild(row);
+          });
+        })
+        .catch(error => {
+          console.log('An error occurred while fetching records:', error.message);
+        });
+    }
 
-    <section>
-      <h2>Records</h2>
+    function submitData(event) {
+      event.preventDefault(); // Prevent form submission
 
-      <ul id="recordList" role="list"></ul>
-    </section>
-  </main>
+      const url = 'https://felmomyinwjzbtvfyalv.supabase.co/rest/v1/records';
+      const apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlbG1vbXlpbndqemJ0dmZ5YWx2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTY3MTQ4NDcsImV4cCI6MjAxMjI5MDg0N30.GZ-k-aHnR7NFQR0vnL2s3TDeyDVLMqT5RkStP_LeQHQ';
+      const authorizationHeader = `Bearer ${apiKey}`;
+      const contentTypeHeader = 'application/json';
+      const preferHeader = 'return=minimal';
 
-  <script src="script.js" defer></script>
+      const form = document.getElementById("myForm");
+      const formData = new FormData(form);
 
+      const jsonData = {};
+      formData.forEach(function(value, key) {
+        jsonData[key] = value;
+      });
+
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': contentTypeHeader,
+          'Prefer': preferHeader,
+          'Authorization': authorizationHeader,
+          'apikey': apiKey
+        },
+        body: JSON.stringify(jsonData)
+      };
+
+      fetch(url, requestOptions)
+        .then(response => {
+          if (response.ok) {
+            console.log('Data inserted successfully');
+            form.reset(); // Reset the form
+            fetchRecords(); // Fetch and display all records
+          } else {
+            throw new Error('Data insertion failed');
+          }
+        })
+        .catch(error => {
+          console.log('An error occurred:', error.message);
+        });
+    }
+
+    document.getElementById("myForm").addEventListener("submit", submitData);
+
+    // Fetch and display records when the page loads
+    fetchRecords();
+  </script>
 </body>
-
 </html>
