@@ -1,7 +1,12 @@
-<!DOCTYPE html>
+<!DOCTYPE html dir="rtl">
 <html>
 <head>
   <title>Submit Data</title>
+  <style>.day-group {
+    background-color: #f1f1f1;
+    font-weight: bold;
+    text-align: center;
+  }</style>
 </head>
 <body>
 <!DOCTYPE html> <html> <head> <title>Submit Data</title> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"> </head> <body> <div class="container">
@@ -11,14 +16,28 @@
 
     <h1 class="text-center my-4">Submit Form</h1>
 
-    <form id="myForm" class="card p-4">
+    <form id="myForm" class="card p-4" dir="rtl">
       <div class="form-group">
-        <input type="text" name="name" placeholder="Enter name" class="form-control" required>
+        <input type="text" name="name" placeholder="שם מלא" class="form-control" required>
       </div>
       <div class="form-group">      
-        <input type="email" name="email" placeholder="Enter email" class="form-control" required>
-      </div>
-      <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        <input type="text" name="idfnumber" placeholder="הכנס מספר אישי צבאי" class="form-control" required>
+      </div>  
+      <div class="form-group">    
+        <select id="to" name="to" class="form-control" required>
+          <option value="">יצאתי מ:</option>
+          <option value="base">בסיס</option>
+          <option value="home">בית</option>
+        </select>
+      </div>  
+      <div class="form-group">    
+        <select id="from" name="from" class="form-control" required>
+          <option value="">הגעתי ל:</option>
+          <option value="base">בסיס</option>
+          <option value="home">בית</option>
+        </select>
+      </div>  
+      <button type="submit" class="btn btn-primary btn-block">שלח פרטים</button>
     </form>
 
   </div>
@@ -31,11 +50,13 @@
 
     <table id="recordsTable" class="table table-bordered">
       <thead>
-        <tr>
+        <tr dir="rtl">
+          <th>נוצר בתאריך</th>
+          <th>אל:</th>
+          <th>מ:</th>
+          <th>מספר צבאי</th>
+          <th>שם</th>
           <th>ID</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Created At</th>
         </tr> 
       </thead>
       <tbody></tbody>
@@ -63,15 +84,25 @@
           tableBody.innerHTML = ''; // Clear existing table rows
 
           data.forEach(record => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-              <td>${record.id}</td>
-              <td>${record.name}</td>
-              <td>${record.email}</td>
-              <td>${record.created_at}</td>
-            `;
-            tableBody.appendChild(row);
-          });
+  const row = document.createElement('tr');
+
+  const createdAt = new Date(record.created_at);
+
+  const day = createdAt.getUTCDate().toString().padStart(2, '0');
+  const month = (createdAt.getUTCMonth() + 1).toString().padStart(2, '0');
+  const year = createdAt.getUTCFullYear();
+  const hours = createdAt.getUTCHours().toString().padStart(2, '0');
+  const minutes = createdAt.getUTCMinutes().toString().padStart(2, '0');
+  const seconds = createdAt.getUTCSeconds().toString().padStart(2, '0');
+
+  const formattedDate = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+
+  row.innerHTML = `
+
+  `;
+  tableBody.appendChild(row);
+});
+groupTableByDays(data, tableBody);
         })
         .catch(error => {
           console.log('An error occurred while fetching records:', error.message);
@@ -125,6 +156,57 @@
 
     // Fetch and display records when the page loads
     fetchRecords();
+
+    function groupTableByDays(records, tableBody) {
+  // Group records by day
+  const recordsByDay = {};
+  records.forEach(record => {
+    const createdAt = new Date(record.created_at);
+    const dayKey = `${createdAt.getUTCDate()}-${createdAt.getUTCMonth() + 1}-${createdAt.getUTCFullYear()}`;
+
+    if (!recordsByDay.hasOwnProperty(dayKey)) {
+      recordsByDay[dayKey] = [];
+    }
+
+    recordsByDay[dayKey].push(record);
+  });
+
+  // Create table rows for each day group
+  for (const dayKey in recordsByDay) {
+    const records = recordsByDay[dayKey];
+
+    // Create a group header row
+    const groupRow = document.createElement('tr');
+    groupRow.innerHTML = `<td class="day-group" colspan="6">${dayKey}</td>`;
+    tableBody.appendChild(groupRow);
+
+    // Create individual rows for each record in the group
+    records.forEach(record => {
+      const row = document.createElement('tr');
+
+      const createdAt = new Date(record.created_at);
+
+      const day = createdAt.getUTCDate().toString().padStart(2, '0');
+      const month = (createdAt.getUTCMonth() + 1).toString().padStart(2, '0');
+      const year = createdAt.getUTCFullYear();
+      const hours = createdAt.getUTCHours().toString().padStart(2, '0');
+      const minutes = createdAt.getUTCMinutes().toString().padStart(2, '0');
+      const seconds = createdAt.getUTCSeconds().toString().padStart(2, '0');
+
+      const formattedDate = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+
+      row.innerHTML = `
+      <td>${formattedDate}</td>
+  <td>${record.from}</td>
+  <td>${record.to}</td>
+  <td>${record.idfnumber}</td>
+  <td>${record.name}</td>
+  <td>${record.id}</td>
+      `;
+      tableBody.appendChild(row);
+    });
+  }
+}
   </script>
 </body>
 </html>
