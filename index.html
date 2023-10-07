@@ -11,30 +11,34 @@
 <body>
 <!DOCTYPE html> <html> <head> <title>Submit Data</title> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"> </head> <body> <div class="container">
 
-<div class="row">
+<div class="row" >
   <div class="col-md-6 offset-md-3">
 
     <h1 class="text-center my-4">Submit Form</h1>
 
     <form id="myForm" class="card p-4" dir="rtl">
       <div class="form-group">
-        <input type="text" name="name" placeholder="שם מלא" class="form-control" required>
+        <label for="name" style="text-align: right;">שם מלא:</label>
+        <input type="text" name="name" placeholder="שם מלא" class="form-control" required style="text-align: right;">
       </div>
       <div class="form-group">      
-        <input type="text" name="idfnumber" placeholder="הכנס מספר אישי צבאי" class="form-control" required>
+        <label for="idfnumber" style="text-align: right;">הכנס מספר אישי צבאי:</label>
+        <input type="text" name="idfnumber" placeholder="הכנס מספר אישי צבאי" class="form-control" required style="text-align: right;">
       </div>  
       <div class="form-group">    
-        <select id="to" name="to" class="form-control" required>
+        <label for="to" style="text-align: right;">יצאתי מ:</label>
+        <select id="to" name="to" class="form-control" required onchange="updateFromField()" style="text-align: right;">
           <option value="">יצאתי מ:</option>
-          <option value="base">בסיס</option>
-          <option value="home">בית</option>
+          <option value="בסיס">בסיס</option>
+          <option value="בית">בית</option>
         </select>
       </div>  
       <div class="form-group">    
-        <select id="from" name="from" class="form-control" required>
+        <label for="from" style="text-align: right;">הגעתי ל:</label>
+        <select id="from" name="from" class="form-control" required onchange="updateToField()" style="text-align: right;">
           <option value="">הגעתי ל:</option>
-          <option value="base">בסיס</option>
-          <option value="home">בית</option>
+          <option value="בסיס">בסיס</option>
+          <option value="בית">בית</option>
         </select>
       </div>  
       <button type="submit" class="btn btn-primary btn-block">שלח פרטים</button>
@@ -207,6 +211,31 @@ groupTableByDays(data, tableBody);
     });
   }
 }
+
+function updateFromField() {
+    var toField = document.getElementById("to");
+    var fromField = document.getElementById("from");
+
+    if (toField.value === "בסיס") {
+      fromField.value = "בית";
+    }
+    if (toField.value === "בית") {
+      fromField.value = "בסיס";
+    }
+    
+  }
+
+  function updateToField() {
+    var toField = document.getElementById("to");
+    var fromField = document.getElementById("from");
+
+    if (fromField.value === "בסיס") {
+      toField.value = "בית";
+    }
+    if (fromField.value === "בית") {
+      toField.value = "בסיס";
+    }
+  }
   </script>
 </body>
 </html>
