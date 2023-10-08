@@ -326,10 +326,14 @@ body {
 
   const formattedDate = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
 
-  row.innerHTML = `
-
-  `;
-  tableBody.appendChild(row);
+ // row.innerHTML = `
+ //     <td>${formattedDate}</td>
+ // <td>${record.from}</td>
+ // <td>${record.to}</td>
+ // <td>${record.name}</td>
+ // <td>${record.id}</td>
+ //     `;
+  //tableBody.appendChild(row);
 });
 groupTableByDays(data, tableBody);
         })
