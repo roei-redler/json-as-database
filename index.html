@@ -281,9 +281,9 @@ body {
         <label for="idfnumber" style="text-align: right;" hidden>הכנס מספר אישי צבאי:</label>
         <input type="text" name="idfnumber" placeholder="הכנס מספר אישי צבאי" class="form-control" hidden style="text-align: right;">
       </div>  
-      <div class="form-group">    
-        <label for="to" style="text-align: right;">יצאתי מ:</label>
-        <select id="to" name="to" class="form-control" required onchange="updateFromField()" style="text-align: right;">
+      <div class="">    
+        <label for="to" style="text-align: right;" hidden>יצאתי מ:</label>
+        <select id="to" name="to" class="form-control" required onchange="updateFromField()" style="text-align: right;" hidden>
           <option value="">יצאתי מ:</option>
           <option value="בסיס">בסיס</option>
           <option value="בית">בית</option>
@@ -293,8 +293,8 @@ body {
         <label for="from" style="text-align: right;">הגעתי ל:</label>
         <select id="from" name="from" class="form-control" required onchange="updateToField()" style="text-align: right;">
           <option value="">הגעתי ל:</option>
-          <option value="בסיס">בסיס</option>
-          <option value="בית">בית</option>
+          <option value="בסיס" style="background-color: CCD1D1;color: black;">🚀 בסיס</option>
+          <option value="בית" style="background-color: 5490ED;color: white;">🏠 בית</option>
         </select>
       </div>  
       <button type="submit" class="btn btn-primary btn-block">שלח פרטים</button>
@@ -313,7 +313,6 @@ body {
         <tr dir="rtl">
           <th>נוצר בתאריך</th>
           <th>אל:</th>
-          <th>מ:</th>
           <th>שם</th>
           <th>ID</th>
         </tr> 
@@ -461,7 +460,6 @@ groupTableByDays(data, tableBody);
       row.innerHTML = `
       <td>${formattedDate}</td>
   <td>${record.from}</td>
-  <td>${record.to}</td>
   <td>${record.name}</td>
   <td>${record.id}</td>
       `;
@@ -533,6 +531,7 @@ function showTime() {
 }
 
 showTime();
+
   </script>
       <script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>
 
