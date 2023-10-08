@@ -74,7 +74,7 @@
   <div class="col-md-8 offset-md-2">
 
     <h2 class="text-center my-4">רשומות מידע</h2>
-
+    <button id="btn-export"><b>Export as XLSX</b></button>
     <table id="recordsTable" class="table table-bordered">
       <thead>
         <tr dir="rtl">
@@ -259,6 +259,18 @@ function updateFromField() {
       toField.value = "בסיס";
     }
   }
+  const exportButton = document.getElementById('btn-export');
+
+const table = document.getElementById('recordsTable');
+
+exportButton.addEventListener('click', () => {
+  /* Create worksheet from HTML DOM TABLE */
+  const wb = XLSX.utils.table_to_book(table, {sheet: 'sheet-1'});
+
+  /* Export to file (start a download) */
+  XLSX.writeFile(wb, 'MyTable.xlsx');
+});
   </script>
+      <script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>
 </body>
 </html>
