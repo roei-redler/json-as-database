@@ -322,9 +322,11 @@ document.getElementById('myForm').addEventListener('submit', async function(e) {
   e.preventDefault(); // Prevent form submission
 
   const id = document.getElementsByName('id')[0].value;
-  const password = document.getElementsByName('password')[0].value;
+  const password1 = document.getElementsByName('password')[0].value;
   const from = document.getElementsByName('from')[0].value;
-  if (password === generatedPassword) {
+  const generatedPassword = generatePassword();
+  if (password1 === generatedPassword
+) {
   const url = `https://felmomyinwjzbtvfyalv.supabase.co/rest/v1/records?id=eq.${id}`;
   const data = JSON.stringify({ "from": from });
 
@@ -352,10 +354,10 @@ document.getElementById('myFormY').addEventListener('submit', async function(e) 
   e.preventDefault(); // Prevent form submission
 
   const id = document.getElementsByName('id2')[0].value;
-  const password = document.getElementsByName('password2')[0].value;
+  const password2 = document.getElementsByName('password2')[0].value;
   const generatedPassword = generatePassword();
 
-  if (password === generatedPassword) {
+  if (password2 === generatedPassword) {
     const url = `https://felmomyinwjzbtvfyalv.supabase.co/rest/v1/records?id=eq.${id}`;
     const data = JSON.stringify({ "from": from });
 
