@@ -166,6 +166,39 @@ body {
         top: 10px;
     }
 }
+.footer-links {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+   border-radius: 30px; 
+  }
+
+  .footer-links li {
+    flex-grow: 1; /* Add this property to make the list items fill the height */
+  }
+
+  .footer-links li a {
+    color: white;
+    text-decoration: none;
+  }
+
+  /* Add the following CSS to make each list item a box with different background color */
+  .footer-links li {
+    background-color: #E91E63;
+    padding: 2%;
+    border-radius: 30px;
+  }
+
+  .footer-links li:nth-child(2) {
+    background-color: #9C27B0;
+  }
+
+  .footer-links li:nth-child(3) {
+    background-color: #2196F3;
+  }
   </style>
 </head>
 <body>
@@ -461,4 +494,16 @@ showTime();
 
 
 </body>
+<footer style="background-color: #1A237E; padding: 20px; color: white; text-align: center; border-radius: 30px;">
+  <ul class="footer-links">
+    <li><a href="#"><i class="bi bi-house-door-fill"></i> link</a></li>
+    <li><a href="#"><i class="bi bi-envelope-fill"></i> link</a></li>
+    <li>
+      <a href="https://waze.com/ul/hsv8tt9q7v">
+        <img src="https://www.zivltd.com/wp-content/uploads/2016/04/waze.svg" alt="Navigation Image" style="height: 20px; width: 20px; margin-right: 5px;">
+        ניווט ליחידה
+      </a>
+    </li>
+  </ul>
+</footer>
 </html>
