@@ -134,13 +134,26 @@ body {
   height: 50px; /* Adjust the height as needed */
   border-radius: 50%;
 }
+.clock {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #ece4e4;
+    font-size: 30px;
+    font-family: Orbitron;
+    letter-spacing: 7px;
+    
+}
   </style>
 </head>
 <body>
+  
   <nav class="nav" >
     <input type="checkbox" id="nav-check">
     <div class="nav-header">
       <div class="nav-title">
+        <div id="MyClockDisplay" class="clock" onload="showTime()"></div>
         <a href="#">
           <img src="https://yt3.googleusercontent.com/MHJve3f8CvFm6TJYZ4ebtDflRNucnMnn4MZareUSnpPU2D3arkPOUsr75dM3wcwB486WwiP00w=s900-c-k-c0x00ffffff-no-rj" alt="" class="round-logo">
         </a>
@@ -404,7 +417,27 @@ exportButton.addEventListener('click', () => {
   /* Export to file (start a download) */
   XLSX.writeFile(wb, 'MyTable.xlsx');
 });
+function showTime() {
+  var date = new Date();
+  var options = {
+    timeZone: "Asia/Jerusalem",
+    hour12: false,
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  };
+  var time = date.toLocaleTimeString("en-US", options);
+  
+  document.getElementById("MyClockDisplay").innerText = time;
+  document.getElementById("MyClockDisplay").textContent = time;
+
+  setTimeout(showTime, 1000);
+}
+
+showTime();
   </script>
       <script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>
+
+
 </body>
 </html>
