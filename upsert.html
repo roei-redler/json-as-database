@@ -267,28 +267,21 @@ body {
         </a>
       </div>
     </div>
+
 <div class="row" >
   <div class="col-md-6 offset-md-3">
-    <h1 class="text-center my-4">רישום נוכחות</h1>
-
-
+    <h1 class="text-center my-4">עדכון נוכחות</h1>
     <form id="myForm" class="card p-4" dir="rtl">
       <div class="form-group">
-        <label for="name" style="text-align: right;">שם מלא:</label>
-        <input type="text" name="name" placeholder="שם מלא" class="form-control" required style="text-align: right;">
+    <label for="password" style="text-align: right;" dir="rtl">סיסמה:</label>
+    <input type="password" name="password" placeholder="סיסמה" class="form-control" required style="text-align: right;">
+  </div>
+    <form id="myForm" class="card p-4" dir="rtl">
+      <div class="form-group">
+        <label for="id" style="text-align: right;">ID :</label>
+        <input type="text" name="id" placeholder="ID" class="form-control" required style="text-align: right;">
       </div>
-      <div class="">      
-        <label for="idfnumber" style="text-align: right;" hidden>הכנס מספר אישי צבאי:</label>
-        <input type="text" name="idfnumber" placeholder="הכנס מספר אישי צבאי" class="form-control" hidden style="text-align: right;">
-      </div>  
-      <div class="">    
-        <label for="to" style="text-align: right;" hidden>יצאתי מ:</label>
-        <select id="to" name="to" class="form-control" onchange="updateFromField()" style="text-align: right;" hidden>
-          <option value="">יצאתי מ:</option>
-          <option value="בסיס">בסיס</option>
-          <option value="בית">בית</option>
-        </select>
-      </div>  
+
       <div class="form-group">    
         <label for="from" style="text-align: right;">הגעתי ל:</label>
         <select id="from" name="from" class="form-control" required onchange="updateToField()" style="text-align: right;">
@@ -297,216 +290,94 @@ body {
           <option value="בית" style="background-color: 5490ED;color: white;">🏠 בית</option>
         </select>
       </div>  
-      <button type="submit" class="btn btn-primary btn-block">שלח פרטים</button>
+      <button type="submit" class="btn btn-primary btn-block">עדכן פרטים</button>
+    </form>
+
+  </div>
+</div>
+<div class="row" >
+  <div class="col-md-6 offset-md-3">
+    <h1 class="text-center my-4">מחיקת נוכחות</h1>
+
+
+    <form id="myFormY" class="card p-4" dir="rtl">
+      <div class="form-group">
+        <label for="password2" style="text-align: right;" dir="rtl">סיסמה:</label>
+        <input type="password" name="password2" placeholder="סיסמה" class="form-control" required style="text-align: right;">
+      </div>
+      <div class="form-group">
+        <label for="id2" style="text-align: right;">ID :</label>
+        <input type="text" name="id2" placeholder="ID" class="form-control" required style="text-align: right;">
+      </div>
+
+
+      <button type="submit" class="btn btn-primary btn-block">עדכן פרטים</button>
     </form>
 
   </div>
 </div>
 
-<div class="row">
-  <div class="col-md-8 offset-md-2">
-
-    <h2 class="text-center my-4">רשומות מידע</h2>
-    <button id="btn-export"><b>Export as XLSX</b></button>
-    <table id="recordsTable" class="table table-bordered">
-      <thead>
-        <tr dir="rtl">
-          <th>נוצר בתאריך</th>
-          <th>אל:</th>
-          <th>שם</th>
-          <th>ID</th>
-        </tr> 
-      </thead>
-      <tbody></tbody>
-    </table>
-
-  </div>
-</div>
-
   <script>
-    function fetchRecords() {
-      const url = 'https://felmomyinwjzbtvfyalv.supabase.co/rest/v1/records?select=*&order=created_at.desc';
-      const apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlbG1vbXlpbndqemJ0dmZ5YWx2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5NjcxNDg0NywiZXhwIjoyMDEyMjkwODQ3fQ.NByj9GFB3SvVseGCBbSoYYOdMvmVyr0Vbd-4GuxAMOU';
-      const authorizationHeader = `Bearer ${apiKey}`;
-      const apiRequestOptions = {
-        headers: {
-          'apikey': apiKey,
-          'Authorization': authorizationHeader
-        }
-      };
+document.getElementById('myForm').addEventListener('submit', async function(e) {
+  e.preventDefault(); // Prevent form submission
 
-      fetch(url, apiRequestOptions)
-        .then(response => response.json())
-        .then(data => {
-          const tableBody = document.querySelector('#recordsTable tbody');
-          tableBody.innerHTML = ''; // Clear existing table rows
+  const id = document.getElementsByName('id')[0].value;
+  const password = document.getElementsByName('password')[0].value;
+  const from = document.getElementsByName('from')[0].value;
+  if (password === generatedPassword) {
+  const url = `https://felmomyinwjzbtvfyalv.supabase.co/rest/v1/records?id=eq.${id}`;
+  const data = JSON.stringify({ "from": from });
 
-          data.forEach(record => {
-  const row = document.createElement('tr');
-
-  const createdAt = new Date(record.created_at);
-
-  const day = createdAt.getUTCDate().toString().padStart(2, '0');
-  const month = (createdAt.getUTCMonth() + 1).toString().padStart(2, '0');
-  const year = createdAt.getUTCFullYear();
-  const hours = createdAt.getUTCHours().toString().padStart(2, '0');
-  const minutes = createdAt.getUTCMinutes().toString().padStart(2, '0');
-  const seconds = createdAt.getUTCSeconds().toString().padStart(2, '0');
-
-  const formattedDate = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
-
- // row.innerHTML = `
- //     <td>${formattedDate}</td>
- // <td>${record.from}</td>
- // <td>${record.to}</td>
- // <td>${record.name}</td>
- // <td>${record.id}</td>
- //     `;
-  //tableBody.appendChild(row);
-});
-groupTableByDays(data, tableBody);
-        })
-        .catch(error => {
-          console.log('An error occurred while fetching records:', error.message);
-        });
-    }
-
-    function submitData(event) {
-      event.preventDefault(); // Prevent form submission
-
-      const url = 'https://felmomyinwjzbtvfyalv.supabase.co/rest/v1/records';
-      const apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlbG1vbXlpbndqemJ0dmZ5YWx2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTY3MTQ4NDcsImV4cCI6MjAxMjI5MDg0N30.GZ-k-aHnR7NFQR0vnL2s3TDeyDVLMqT5RkStP_LeQHQ';
-      const authorizationHeader = `Bearer ${apiKey}`;
-      const contentTypeHeader = 'application/json';
-      const preferHeader = 'return=minimal';
-
-      const form = document.getElementById("myForm");
-      const formData = new FormData(form);
-
-      const jsonData = {};
-      formData.forEach(function(value, key) {
-        jsonData[key] = value;
-      });
-
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': contentTypeHeader,
-          'Prefer': preferHeader,
-          'Authorization': authorizationHeader,
-          'apikey': apiKey
-        },
-        body: JSON.stringify(jsonData)
-      };
-
-      fetch(url, requestOptions)
-        .then(response => {
-          if (response.ok) {
-            console.log('Data inserted successfully');
-            form.reset(); // Reset the form
-            fetchRecords(); // Fetch and display all records
-          } else {
-            throw new Error('Data insertion failed');
-          }
-        })
-        .catch(error => {
-          console.log('An error occurred:', error.message);
-        });
-    }
-
-    document.getElementById("myForm").addEventListener("submit", submitData);
-
-    // Fetch and display records when the page loads
-    fetchRecords();
-
-    function groupTableByDays(records, tableBody) {
-  // Group records by day
-  const recordsByDay = {};
-  records.forEach(record => {
-    const createdAt = new Date(record.created_at);
-    const dayKey = `${createdAt.getUTCDate()}-${createdAt.getUTCMonth() + 1}-${createdAt.getUTCFullYear()}`;
-
-    if (!recordsByDay.hasOwnProperty(dayKey)) {
-      recordsByDay[dayKey] = [];
-    }
-
-    recordsByDay[dayKey].push(record);
+  const response = await fetch(url, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlbG1vbXlpbndqemJ0dmZ5YWx2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5NjcxNDg0NywiZXhwIjoyMDEyMjkwODQ3fQ.NByj9GFB3SvVseGCBbSoYYOdMvmVyr0Vbd-4GuxAMOU',
+      'Content-Type': 'application/json',
+      'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlbG1vbXlpbndqemJ0dmZ5YWx2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5NjcxNDg0NywiZXhwIjoyMDEyMjkwODQ3fQ.NByj9GFB3SvVseGCBbSoYYOdMvmVyr0Vbd-4GuxAMOU',
+    },
+    body: data,
   });
 
-  // Create table rows for each day group
-  for (const dayKey in recordsByDay) {
-    const records = recordsByDay[dayKey];
+  const text = await response.text();
+  console.log(text);
 
-    // Create a group header row
-    const groupRow = document.createElement('tr');
-    groupRow.innerHTML = `<td class="day-group" colspan="6">${dayKey}</td>`;
-    tableBody.appendChild(groupRow);
+  // Clear form data
+  this.reset();
+} else {
+    console.log("Invalid password");
+    // Handle the case when the password is incorrect
+  }
+});
+document.getElementById('myFormY').addEventListener('submit', async function(e) {
+  e.preventDefault(); // Prevent form submission
 
-    // Create individual rows for each record in the group
-    records.forEach(record => {
-      const row = document.createElement('tr');
+  const id = document.getElementsByName('id2')[0].value;
+  const password = document.getElementsByName('password2')[0].value;
+  const generatedPassword = generatePassword();
 
-      const createdAt = new Date(record.created_at);
+  if (password === generatedPassword) {
+    const url = `https://felmomyinwjzbtvfyalv.supabase.co/rest/v1/records?id=eq.${id}`;
+    const data = JSON.stringify({ "from": from });
 
-      const day = createdAt.getUTCDate().toString().padStart(2, '0');
-      const month = (createdAt.getUTCMonth() + 1).toString().padStart(2, '0');
-      const year = createdAt.getUTCFullYear();
-      const hours = createdAt.getUTCHours().toString().padStart(2, '0');
-      const minutes = createdAt.getUTCMinutes().toString().padStart(2, '0');
-      const seconds = createdAt.getUTCSeconds().toString().padStart(2, '0');
-
-      const formattedDate = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
-
-      row.innerHTML = `
-      <td>${formattedDate}</td>
-  <td>${record.from}</td>
-  <td>${record.name}</td>
-  <td>${record.id}</td>
-      `;
-      if (record.to === 'בסיס') {
-        row.querySelector('td:nth-child(2)').style.backgroundColor = '5490ED';
-      } else {
-        row.querySelector('td:nth-child(2)').style.backgroundColor = '#CCD1D1';
-      }
-      tableBody.appendChild(row);
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlbG1vbXlpbndqemJ0dmZ5YWx2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5NjcxNDg0NywiZXhwIjoyMDEyMjkwODQ3fQ.NByj9GFB3SvVseGCBbSoYYOdMvmVyr0Vbd-4GuxAMOU',
+      'Content-Type': 'application/json',
+      'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlbG1vbXlpbndqemJ0dmZ5YWx2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5NjcxNDg0NywiZXhwIjoyMDEyMjkwODQ3fQ.NByj9GFB3SvVseGCBbSoYYOdMvmVyr0Vbd-4GuxAMOU',
+    },
+      body: data,
     });
+
+    const text = await response.text();
+    console.log(text);
+
+    // Clear form data
+    this.reset();
+  } else {
+    console.log("Invalid password");
+    // Handle the case when the password is incorrect
   }
-}
-
-function updateFromField() {
-    var toField = document.getElementById("to");
-    var fromField = document.getElementById("from");
-
-    if (toField.value === "בסיס") {
-      fromField.value = "בית";
-    }
-    if (toField.value === "בית") {
-      fromField.value = "בסיס";
-    }
-    
-  }
-
-  function updateToField() {
-    var toField = document.getElementById("to");
-    var fromField = document.getElementById("from");
-
-    if (fromField.value === "בסיס") {
-      toField.value = "בית";
-    }
-    if (fromField.value === "בית") {
-      toField.value = "בסיס";
-    }
-  }
-  const exportButton = document.getElementById('btn-export');
-
-const table = document.getElementById('recordsTable');
-
-exportButton.addEventListener('click', () => {
-  /* Create worksheet from HTML DOM TABLE */
-  const wb = XLSX.utils.table_to_book(table, {sheet: 'sheet-1'});
-
-  /* Export to file (start a download) */
-  XLSX.writeFile(wb, 'MyTable.xlsx');
 });
 function showTime() {
   var date = new Date();
@@ -526,10 +397,17 @@ function showTime() {
 }
 
 showTime();
+function generatePassword() {
+  var today = new Date(); 
+  var day = today.getDate(); 
+  var month = today.getMonth() + 1; 
+  var year = today.getFullYear(); 
 
+  var password = day.toString() + month.toString() + year.toString() + "123";
+  return password;
+}
   </script>
       <script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>
-
 
 </body>
 
