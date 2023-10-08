@@ -199,6 +199,7 @@ body {
   .footer-links li:nth-child(3) {
     background-color: #2196F3;
   }
+  
   </style>
 </head>
 <body>
@@ -430,6 +431,16 @@ groupTableByDays(data, tableBody);
   <td>${record.name}</td>
   <td>${record.id}</td>
       `;
+      if (record.to === 'בסיס') {
+        row.querySelector('td:nth-child(2)').style.backgroundColor = '51C693';
+      } else {
+        row.querySelector('td:nth-child(2)').style.backgroundColor = '#CCD1D1';
+      }
+      if (record.from === 'בסיס') {
+        row.querySelector('td:nth-child(3)').style.backgroundColor = '51C693';
+      } else {
+        row.querySelector('td:nth-child(3)').style.backgroundColor = '#CCD1D1';
+      }
       tableBody.appendChild(row);
     });
   }
