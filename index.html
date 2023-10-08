@@ -326,7 +326,7 @@ body {
 
   <script>
     function fetchRecords() {
-      const url = 'https://felmomyinwjzbtvfyalv.supabase.co/rest/v1/records?select=*';
+      const url = 'https://felmomyinwjzbtvfyalv.supabase.co/rest/v1/records?select=*&order=created_at.desc';
       const apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlbG1vbXlpbndqemJ0dmZ5YWx2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5NjcxNDg0NywiZXhwIjoyMDEyMjkwODQ3fQ.NByj9GFB3SvVseGCBbSoYYOdMvmVyr0Vbd-4GuxAMOU';
       const authorizationHeader = `Bearer ${apiKey}`;
       const apiRequestOptions = {
