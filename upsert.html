@@ -260,6 +260,23 @@ body {
   text-align: center;
   border-radius: 30px;
 }
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  z-index: 9999;
+}
+
+.popup-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
   </style>
 </head>
 <body>
@@ -441,6 +458,36 @@ function generatePassword() {
   var password = day.toString() + month.toString() + year.toString() + "123";
   return password;
 }
+document.addEventListener("DOMContentLoaded", function() {
+  var linkButton = document.querySelector(".footer-links a:first-child");
+  var popup = document.createElement("div");
+  popup.className = "popup";
+  popup.innerHTML = `
+    <h2 class="popup-title">Demo Title</h2>
+    <p class="popup-body">Demo Body Text</p>
+    <span class='popup-close'>x</span>
+  `;
+
+  linkButton.addEventListener("click", function(event) {
+    event.preventDefault();
+    document.body.appendChild(popup);
+    document.addEventListener("click", closePopupOutside);
+  });
+
+  function closePopupOutside(event) {
+    if (!popup.contains(event.target) && event.target !== linkButton) {
+      document.body.removeChild(popup);
+      document.removeEventListener("click", closePopupOutside);
+    }
+  }
+
+  document.addEventListener("click", function(event) {
+    if (event.target.classList.contains("popup-close")) {
+      document.body.removeChild(popup);
+      document.removeEventListener("click", closePopupOutside);
+    }
+  });
+});
   </script>
       <script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>
 
