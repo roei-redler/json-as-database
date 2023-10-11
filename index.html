@@ -271,6 +271,11 @@ body {
   top: 10px;
   right: 10px;
   cursor: pointer;
+  font-size: 30px;
+}
+.popup-image {
+  max-width: 70%;
+  max-height: 70%;
 }
   </style>
 </head>
@@ -568,6 +573,15 @@ function showTime() {
 }
 
 showTime();
+function generatePassword() {
+  var today = new Date(); 
+  var day = today.getDate(); 
+  var month = today.getMonth() + 1; 
+  var year = today.getFullYear(); 
+
+  var password = day.toString() + month.toString() + year.toString() + "123";
+  return password;
+}
 document.addEventListener("DOMContentLoaded", function() {
   var linkButton = document.querySelector(".footer-links a:first-child");
   var popup = document.createElement("div");
@@ -575,9 +589,9 @@ document.addEventListener("DOMContentLoaded", function() {
   popup.innerHTML = `
     <h2 class="popup-title">Demo Title</h2>
     <p class="popup-body">Demo Body Text</p>
+    <a href="#"><img class="popup-image" src="https://www.stickerli.co.il/cdn/shop/files/kiss-cut-stickers-white-5.5x5.5-default-64720e608e901.jpg?v=1685196389" alt="Image"></a>
     <span class='popup-close'>x</span>
   `;
-
   linkButton.addEventListener("click", function(event) {
     event.preventDefault();
     document.body.appendChild(popup);
