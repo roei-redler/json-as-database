@@ -344,7 +344,7 @@ body {
           <option value="בית" style="background-color: 5490ED;color: white;">🏠 בית</option>
         </select>
       </div>  
-      <button type="submit" class="btn btn-primary btn-block">שלח פרטים</button>
+      <button type="submit" class="btn btn-primary btn-block" id="submitBtn">שלח פרטים</button>
     </form>
 
   </div>
@@ -419,6 +419,7 @@ groupTableByDays(data, tableBody);
     }
 
     function submitData(event) {
+
       event.preventDefault(); // Prevent form submission
 
       const url = 'https://felmomyinwjzbtvfyalv.supabase.co/rest/v1/records';
@@ -432,7 +433,7 @@ groupTableByDays(data, tableBody);
 
       const jsonData = {};
       formData.forEach(function(value, key) {
-        jsonData[key] = value;
+        jsonData[key] = value;    
       });
 
       const requestOptions = {
@@ -450,6 +451,8 @@ groupTableByDays(data, tableBody);
         .then(response => {
           if (response.ok) {
             console.log('Data inserted successfully');
+            document.getElementById("submitBtn").disabled = true;
+            document.getElementById("submitBtn").innerHTML = "המידע נשלח בהצלחה";
             form.reset(); // Reset the form
             fetchRecords(); // Fetch and display all records
           } else {
@@ -465,7 +468,6 @@ groupTableByDays(data, tableBody);
 
     // Fetch and display records when the page loads
     fetchRecords();
-
     function groupTableByDays(records, tableBody) {
   // Group records by day
   const recordsByDay = {};
@@ -614,7 +616,6 @@ document.addEventListener("DOMContentLoaded", function() {
 });
   </script>
       <script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>
-
 
 </body>
 
