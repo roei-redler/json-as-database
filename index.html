@@ -11,6 +11,15 @@
   <meta property="og:type" content="website">
   <title>Submit Data</title>
   <style>
+@keyframes colorChange {
+  0% { color: rgb(0, 0, 0); background-color: red; font-size: 16px; }
+  50% { color: red; background-color: rgb(23, 150, 36); font-size: 18px; }
+  100% { color: rgb(0, 0, 0); background-color: red; font-size: 16px; }
+}
+
+html body nav ul li:nth-child(2) {
+  animation: colorChange 1.5s infinite;
+}
   #btn-export {
   background-color: #4CAF50;
   color: white;
