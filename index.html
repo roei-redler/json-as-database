@@ -9,6 +9,7 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:type" content="website">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <title>Submit Data</title>
   <style>
 @keyframes colorChange {
@@ -273,6 +274,7 @@ body {
   padding: 20px;
   border: 1px solid #ccc;
   z-index: 9999;
+  width: 80%!important;
 }
 
 .popup-close {
@@ -608,9 +610,26 @@ document.addEventListener("DOMContentLoaded", function() {
   var popup = document.createElement("div");
   popup.className = "popup";
   popup.innerHTML = `
-    <h2 class="popup-title">Demo Title</h2>
-    <p class="popup-body">Demo Body Text</p>
-    <a href="#"><img class="popup-image" src="https://www.stickerli.co.il/cdn/shop/files/kiss-cut-stickers-white-5.5x5.5-default-64720e608e901.jpg?v=1685196389" alt="Image"></a>
+  <center><h2 class="popup-title">Website Information</h2></center>
+        <p class="popup-body">
+          This website includes the following features:
+          <ul>
+            <li><i class="fas fa-mobile-alt"></i> Responsive design and user-friendly interfaces</li>
+            <li><i class="fas fa-check-circle"></i> Form with validation and submission via JavaScript</li>
+            <li><i class="fas fa-window-maximize"></i> Modals/popups created with JavaScript</li>
+            <li><i class="far fa-clock"></i> Real-time clock using JavaScript</li>
+            <li><i class="fas fa-magic"></i> Animations with CSS @keyframes</li>
+          </ul>
+          Technologies used:
+          <ul>
+            <li><i class="fab fa-html5"></i> Frontend: HTML5, CSS3, JavaScript, Bootstrap</li>
+            <li><i class="fas fa-server"></i> Backend: Supabase</li>
+            <li><i class="fas fa-database"></i> Database: Supabase Postgres</li>
+            <li><i class="fas fa-paint-brush"></i> Design: Custom CSS styles, Bootstrap</li>
+            <li><i class="fab fa-github"></i> Hosting: GitHub Pages</li>
+          </ul>
+        </p>
+        <center><a href="#"><img class="popup-image" src="https://www.stickerli.co.il/cdn/shop/files/kiss-cut-stickers-white-5.5x5.5-default-64720e608e901.jpg?v=1685196389" alt="Image"></a></center>
     <span class='popup-close'>x</span>
   `;
   linkButton.addEventListener("click", function(event) {
@@ -648,7 +667,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <footer class="footer">
   <ul class="footer-links">
-    <li><a href="#"><i class="bi bi-house-door-fill"></i> link</a></li>
+    <li><a href="#"><i class="bi bi-house-door-fill"></i> אודות האתר</a></li>
     <li><a href="upsert.html"><i class="bi bi-envelope-fill"></i> עדכון רשומות</a></li>
     <li>
       <a href="https://waze.com/ul/hsv8tt9q7v">
