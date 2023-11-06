@@ -433,7 +433,10 @@ document.getElementById('myForm').addEventListener('submit', async function(e) {
   if (password1 === generatedPassword
 ) {
   const url = `https://felmomyinwjzbtvfyalv.supabase.co/rest/v1/records?id=eq.${id}`;
-  const data = JSON.stringify({ "from": from,"to": null });
+  const data = JSON.stringify({
+  "from": from,
+  "to": "null"
+});
 
   const response = await fetch(url, {
     method: 'PATCH',
@@ -444,6 +447,7 @@ document.getElementById('myForm').addEventListener('submit', async function(e) {
     },
     body: data,
   });
+  
 
   const text = await response.text();
   console.log(text);
