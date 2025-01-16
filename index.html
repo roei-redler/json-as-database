@@ -1,714 +1,528 @@
-<!DOCTYPE html dir="rtl">
-<html>
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-  <meta property="og:title" content="TITLE OF YOUR WEBSITE">
-  <meta property="og:image" content="https://github.com/roei-redler/json-as-database/blob/main/%D7%91%D7%90%D7%A0%D7%A8-4x-100.jpg?raw=true">
-  <meta property="og:description" content="טופס רישום">
-  <meta property="og:url" content="https://roei-redler.github.io/json-as-database/">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:type" content="website">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <title>Submit Data</title>
-  <style>
-@keyframes colorChange {
-  0% { color: rgb(0, 0, 0); background-color: red; font-size: 16px; }
-  50% { color: red; background-color: rgb(23, 150, 36); font-size: 18px; }
-  100% { color: rgb(0, 0, 0); background-color: red; font-size: 16px; }
-}
-
-html body nav ul li:nth-child(2) {
-  animation: colorChange 1.5s infinite;
-}
-  #btn-export {
-  background-color: #4CAF50;
-  color: white;
-  padding: 7px 15px;
-  border: none;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 30px;
-  margin-top: -57px;
-}
-@media (max-width: 600px) {
-  #btn-export {
-    padding: 2px 5px;
-    font-size: 13px;
-    margin-top: -30px;
-    margin-left: -10px;
-  }
-}
-
-#btn-export:hover {
-  background-color: #45a049;
-}
-
-#btn-export b {
-  font-weight: bold;
-}
-  .day-group {
-    background-color: #756d6d;
-    font-weight: bold;
-    text-align: center;
-    color: aliceblue;
-  }
-  .form-group {
-    text-align: right;
-  }
-  .banner-container {
-      margin-bottom: 20px;
-
-    }
-    .banner-image {
-  height: 20%;
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-.table{
-  text-align: center;
-}
-* {
-  box-sizing: border-box;
-}
-body {
-  margin: 0;
-  font-family: 'Segoe UI';
-}
-.nav {
-  width: 100%;
-  background-color: #1A237E;
-  display: flex;
-  align-items: center;
-}
-.nav > .nav-header {
-  flex: 0.95;
-  padding-left: 1rem;
-}
-.nav > .nav-header > .nav-title {
-  font-size: 22px;
-  color: #fff;
-  
-}
-.nav > .nav-list {
-  display: flex;
-  gap: 2rem;
-  align-items: center; /* Added to center vertically */
-  justify-content: center; /* Added to center horizontally */
-  margin: 0; /* Added to remove default margin */
-  padding: 0; /* Added to remove default padding */
-}
-.nav > .nav-list > li {
-  list-style-type: none;
-  
-}
-.nav > .nav-list > li a {
-  text-decoration: none;
-  color: #efefef;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in; /* Added for smooth transition */
-
-}
-
-.nav > .nav-list > li a:hover {
-  background-color: #fff; /* Added white background on hover */
-  color: #1A237E; /* Added color change on hover */
-}
-.nav > #nav-check {
-    display: none;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <title>מערכת נוכחות</title>
     
-}
-@media (max-width: 380px) {
-  .nav {
-    position: relative; /* Added to establish stacking context */
-    padding: 1rem;
-  }
-  .nav > .nav-btn {
-    display: inline-block;
-    position: absolute;
-    right: 0;
-    top: 0;
-    padding-top: 0.2rem;
-  }
-  .nav > .nav-btn > label {
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-    padding: 13px;
-  }
-  .nav > .nav-btn > label > span {
-    display: block;
-    width: 25px;
-    height: 10px;
-    border-top: 2px solid #eee;
-  }
-  .nav > .nav-list {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Added to center list items vertically */
-    justify-content: center; /* Added to center list items horizontally */
-    gap: 1rem;
-    width: 100%;
-    background-color: #1A237E;
-    height: 0;
-    transition: all 0.3s ease-in;
-    top: 100%;
-    left: 0;
-    overflow: hidden;
-  }
-  .nav > .nav-list > li {
-  
-    margin-top: 1.5rem;
+    <!-- Meta Tags -->
+    <meta property="og:title" content="מערכת נוכחות">
+    <meta property="og:description" content="מערכת לרישום נוכחות">
+    <meta property="og:type" content="website">
     
-  }
-  .nav > #nav-check:checked ~ .nav-list {
-    height: auto; /* Changed from height: calc(100vh - 50px) */
-  }
-}
-.round-logo {
-  display: inline-block;
-  width: 50px; /* Adjust the width as needed */
-  height: 50px; /* Adjust the height as needed */
-  border-radius: 50%;
-}
-.clock {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    color: #ece4e4;
-    font-size: 30px;
-    font-family: Orbitron;
-    letter-spacing: 7px;
-}
+    <!-- CSS Libraries -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --success-color: #10b981;
+            --background-color: #f8fafc;
+            --text-color: #1e293b;
+        }
 
-@media (max-width: 767px) {
-    .clock {
-        font-size: 24px;
-    }
-}
-@media (max-width: 540px) {
-    .clock {
-        font-size: 30px;
-        left: 35%;
-        top: 0px;
-    }
-}
-@media (max-width: 420px) {
-    .clock {
-        font-size: 20px;
-        left: 38%;
-        top: 10px;
-    }
-}
+        body {
+            font-family: 'Rubik', sans-serif;
+            background-color: var(--background-color);
+        }
 
-@media (max-width: 394px) {
-    .clock {
-        font-size: 20px;
-        left: 37%;
-        top: 10;
-    }
-}
-@media (max-width: 380px) {
-    .clock {
-        font-size: 20px;
-        left: 50%;
-        top: 20px;
-    }
-}
+        /* Navbar Styles */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
 
+        .navbar-brand img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
 
-.footer-links {
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
-   border-radius: 30px; 
-  }
+        .navbar-brand img:hover {
+            transform: scale(1.1);
+        }
 
-  .footer-links li {
-    flex-grow: 1; /* Add this property to make the list items fill the height */
-  }
+        /* Clock Styles */
+        .clock {
+            font-family: 'Rubik', sans-serif;
+            font-size: 1.5rem;
+            color: white;
+            margin: 0;
+            text-align: center;
+        }
 
-  .footer-links li a {
-    color: white;
-    text-decoration: none;
-  }
+        /* Card Styles */
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
 
-  /* Add the following CSS to make each list item a box with different background color */
-  .footer-links li {
-    background-color: #E91E63;
-    padding: 5px;
-    border-radius: 30px;
-  }
+        .card:hover {
+            transform: translateY(-5px);
+        }
 
-  .footer-links li:nth-child(2) {
-    background-color: #9C27B0;
-  }
+        /* Form Styles */
+        .form-control {
+            border-radius: 10px;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+        }
 
-  .footer-links li:nth-child(3) {
-    background-color: #2196F3;
-  }
-  .footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #1A237E;
-  padding: 20px;
-  color: white;
-  text-align: center;
-  border-radius: 30px;
-}
-.popup {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: white;
-      padding: 20px;
-      border: 1px solid #ccc;
-      z-index: 9999;
-      width: 80%!important;
-      height: 75%!important;
-      overflow-y: auto;
-    }
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(37,99,235,0.25);
+        }
 
-    @media (max-width: 768px) { /* Adjust styles for screens up to 768px wide */
-      .popup {
-        width: 90%!important;
-        height: 80%!important;
-      }
-    }
+        /* Button Styles */
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 10px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
 
-    @media (max-width: 480px) { /* Adjust styles for screens up to 480px wide */
-      .popup {
-        width: 95%!important;
-        height: 85%!important;
-      }
-    }
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
 
-.popup-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-  font-size: 30px;
-}
-.popup-image {
-  max-width: 70%;
-  max-height: 70%;
-}
-#by-credits {
-  position: fixed;
-  bottom: 0;
-  left: 10px;
-  color: white;
-  padding: 5px;
-  margin: 0;
-  z-index: 9999;
-  font-size: 50%;
-}
-  </style>
+        /* Table Styles */
+        .table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .table th {
+            background-color: #f8fafc;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .day-group {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-weight: 500;
+        }
+
+        /* Export Button */
+        #btn-export {
+            background-color: var(--success-color);
+            color: white;
+            border-radius: 10px;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        #btn-export:hover {
+            background-color: #059669;
+            transform: translateY(-2px);
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 30px 30px 0 0;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-links li {
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links li:hover {
+            background-color: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .clock {
+                font-size: 1.25rem;
+            }
+
+            .footer-links {
+                flex-direction: column;
+            }
+
+            .footer-links li {
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
-  
-  <nav class="nav" >
-    <input type="checkbox" id="nav-check">
-    <div class="nav-header">
-      <div class="nav-title">
-        <div id="MyClockDisplay" class="clock" onload="showTime()"></div>
-        <a href="#">
-          <img src="https://yt3.googleusercontent.com/MHJve3f8CvFm6TJYZ4ebtDflRNucnMnn4MZareUSnpPU2D3arkPOUsr75dM3wcwB486WwiP00w=s900-c-k-c0x00ffffff-no-rj" alt="" class="round-logo">
-        </a>
-      </div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="https://yt3.googleusercontent.com/MHJve3f8CvFm6TJYZ4ebtDflRNucnMnn4MZareUSnpPU2D3arkPOUsr75dM3wcwB486WwiP00w=s900-c-k-c0x00ffffff-no-rj" 
+                     alt="Logo" class="me-2">
+                <div id="MyClockDisplay" class="clock ms-3"></div>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home me-1"></i> בית
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://docs.google.com/spreadsheets/d/1T4OIsVlQHSC3mh8dMmhrN0BJhiuLpnRoRyUwPd57Ftc/edit?usp=sharing">
+                            <i class="fas fa-table me-1"></i> לוח שיבוצים
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <!-- Banner -->
+        <div class="text-center mb-5">
+            <img src="תמונה1.png" alt="Banner" class="img-fluid rounded-3 shadow">
+        </div>
+
+        <!-- Registration Form -->
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title text-center mb-4">רישום נוכחות</h2>
+                        <form id="myForm">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">שם מלא</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="from" class="form-label">הגעתי ל:</label>
+                                <select class="form-select" id="from" name="from" required onchange="updateToField()">
+                                    <option value="">בחר יעד</option>
+                                    <option value="בסיס">🚀 בסיס</option>
+                                    <option value="בית">🏠 בית</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100" id="submitBtn">
+                                שלח פרטים
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Records Table -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2>רשומות מידע</h2>
+                    <button id="btn-export" class="btn">
+                        <i class="fas fa-file-excel me-2"></i>
+                        <b>Export as XLSX</b>
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table id="recordsTable" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>נוצר בתאריך</th>
+                                <th>אל:</th>
+                                <th>שם</th>
+                                <th>ID</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="nav-btn">
-      <label for="nav-check">
-        <span></span>
-        <span></span>
-        <span></span>
-      </label>
-    </div>
-    
-    <ul class="nav-list" >
-      <li><a href="index.html">בית <img src="wired-flat-63-home.gif" style="width: 22px; height: auto;vertical-align: middle; margin-bottom: 3px;" alt="Home Icon"></a></li>
-      <li><a href="https://docs.google.com/spreadsheets/d/1T4OIsVlQHSC3mh8dMmhrN0BJhiuLpnRoRyUwPd57Ftc/edit?usp=sharing">לוח שיבוצים</a></li>
-      <li hidden><a href="#">Contact</a></li>
-    </ul>
-  </nav>
-<!DOCTYPE html> <html> <head> <title>Submit Data</title> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"> </head> <body> <div class="container">
-  <div class="banner-container">
-    <div class="">
-      <div class="">
-        <a href="#">
-          <img src="תמונה1.png" alt="Banner" class="banner-image">
-        </a>
-      </div>
-    </div>
-<div class="row" >
-  <div class="col-md-6 offset-md-3">
-    <h1 class="text-center my-4">רישום נוכחות</h1>
 
-
-    <form id="myForm" class="card p-4" dir="rtl">
-      <div class="form-group">
-        <label for="name" style="text-align: right;">שם מלא:</label>
-        <input type="text" name="name" placeholder="שם מלא" class="form-control" required style="text-align: right;">
-      </div>
-      <div class="">      
-        <label for="idfnumber" style="text-align: right;" hidden>הכנס מספר אישי צבאי:</label>
-        <input type="text" name="idfnumber" placeholder="הכנס מספר אישי צבאי" class="form-control" hidden style="text-align: right;">
-      </div>  
-      <div class="">    
-        <label for="to" style="text-align: right;" hidden>יצאתי מ:</label>
-        <select id="to" name="to" class="form-control" onchange="updateFromField()" style="text-align: right;" hidden>
-          <option value="">יצאתי מ:</option>
-          <option value="בסיס">בסיס</option>
-          <option value="בית">בית</option>
-        </select>
-      </div>  
-      <div class="form-group">    
-        <label for="from" style="text-align: right;">הגעתי ל:</label>
-        <select id="from" name="from" class="form-control" required onchange="updateToField()" style="text-align: right;">
-          <option value="">הגעתי ל:</option>
-          <option value="בסיס" style="background-color: CCD1D1;color: black;">🚀 בסיס</option>
-          <option value="בית" style="background-color: 5490ED;color: white;">🏠 בית</option>
-        </select>
-      </div>  
-      <button type="submit" class="btn btn-primary btn-block" id="submitBtn">שלח פרטים</button>
-    </form>
-
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-md-8 offset-md-2">
-
-    <h2 class="text-center my-4">רשומות מידע</h2>
-    <button id="btn-export"><b>Export as XLSX</b></button>
-    <table id="recordsTable" class="table table-bordered">
-      <thead>
-        <tr dir="rtl">
-          <th>נוצר בתאריך</th>
-          <th>אל:</th>
-          <th>שם</th>
-          <th>ID</th>
-        </tr> 
-      </thead>
-      <tbody></tbody>
-    </table>
-
-  </div>
-</div>
-
-  <script>
-    function fetchRecords() {
-      const url = 'https://sqvbrekjhnvlwxrcopxn.supabase.co/rest/v1/records?select=*&order=created_at.desc';
-      const apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNxdmJyZWtqaG52bHd4cmNvcHhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY5ODU2MjgsImV4cCI6MjA1MjU2MTYyOH0.jH0caP_NL709STFgu7SAvQsPqC3XTp4F-ehBV7jeH_4';
-      const authorizationHeader = `Bearer ${apiKey}`;
-      const apiRequestOptions = {
-        headers: {
-          'apikey': apiKey,
-          'Authorization': authorizationHeader
-        }
-      };
-
-      fetch(url, apiRequestOptions)
-        .then(response => response.json())
-        .then(data => {
-          const tableBody = document.querySelector('#recordsTable tbody');
-          tableBody.innerHTML = ''; // Clear existing table rows
-
-          data.forEach(record => {
-  const row = document.createElement('tr');
-
-  const createdAt = new Date(record.created_at);
-
-  const day = createdAt.getUTCDate().toString().padStart(2, '0');
-  const month = (createdAt.getUTCMonth() + 1).toString().padStart(2, '0');
-  const year = createdAt.getUTCFullYear();
-  const hours = createdAt.getUTCHours().toString().padStart(2, '0');
-  const minutes = createdAt.getUTCMinutes().toString().padStart(2, '0');
-  const seconds = createdAt.getUTCSeconds().toString().padStart(2, '0');
-
-  const formattedDate = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
-
- // row.innerHTML = `
- //     <td>${formattedDate}</td>
- // <td>${record.from}</td>
- // <td>${record.to}</td>
- // <td>${record.name}</td>
- // <td>${record.id}</td>
- //     `;
-  //tableBody.appendChild(row);
-});
-groupTableByDays(data, tableBody);
-        })
-        .catch(error => {
-          console.log('An error occurred while fetching records:', error.message);
-        });
-    }
-
-    function submitData(event) {
-
-      event.preventDefault(); // Prevent form submission
-
-      const url = 'https://sqvbrekjhnvlwxrcopxn.supabase.co/rest/v1/records';
-      const apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNxdmJyZWtqaG52bHd4cmNvcHhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY5ODU2MjgsImV4cCI6MjA1MjU2MTYyOH0.jH0caP_NL709STFgu7SAvQsPqC3XTp4F-ehBV7jeH_4';
-      const authorizationHeader = `Bearer ${apiKey}`;
-      const contentTypeHeader = 'application/json';
-      const preferHeader = 'return=minimal';
-
-      const form = document.getElementById("myForm");
-      const formData = new FormData(form);
-
-      const jsonData = {};
-      formData.forEach(function(value, key) {
-        jsonData[key] = value;    
-      });
-
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': contentTypeHeader,
-          'Prefer': preferHeader,
-          'Authorization': authorizationHeader,
-          'apikey': apiKey
-        },
-        body: JSON.stringify(jsonData)
-      };
-
-      fetch(url, requestOptions)
-        .then(response => {
-          if (response.ok) {
-            console.log('Data inserted successfully');
-            document.getElementById("submitBtn").disabled = true;
-            document.getElementById("submitBtn").innerHTML = "המידע נשלח בהצלחה";
-            form.reset(); // Reset the form
-            fetchRecords(); // Fetch and display all records
-          } else {
-            throw new Error('Data insertion failed');
-          }
-        })
-        .catch(error => {
-          console.log('An error occurred:', error.message);
-        });
-    }
-
-    document.getElementById("myForm").addEventListener("submit", submitData);
-
-    // Fetch and display records when the page loads
-    fetchRecords();
-    function groupTableByDays(records, tableBody) {
-  // Group records by day
-  const recordsByDay = {};
-  records.forEach(record => {
-    const createdAt = new Date(record.created_at);
-    const dayKey = `${createdAt.getUTCDate()}-${createdAt.getUTCMonth() + 1}-${createdAt.getUTCFullYear()}`;
-
-    if (!recordsByDay.hasOwnProperty(dayKey)) {
-      recordsByDay[dayKey] = [];
-    }
-
-    recordsByDay[dayKey].push(record);
-  });
-
-  // Create table rows for each day group
-  for (const dayKey in recordsByDay) {
-    const records = recordsByDay[dayKey];
-
-    // Create a group header row
-    const groupRow = document.createElement('tr');
-    groupRow.innerHTML = `<td class="day-group" colspan="6">${dayKey}</td>`;
-    tableBody.appendChild(groupRow);
-
-    // Create individual rows for each record in the group
-    records.forEach(record => {
-      const row = document.createElement('tr');
-
-      const createdAt = new Date(record.created_at);
-
-      const day = createdAt.getUTCDate().toString().padStart(2, '0');
-      const month = (createdAt.getUTCMonth() + 1).toString().padStart(2, '0');
-      const year = createdAt.getUTCFullYear();
-      const hours = createdAt.getUTCHours().toString().padStart(2, '0');
-      const minutes = createdAt.getUTCMinutes().toString().padStart(2, '0');
-      const seconds = createdAt.getUTCSeconds().toString().padStart(2, '0');
-
-      const formattedDate = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
-
-      row.innerHTML = `
-      <td>${formattedDate}</td>
-  <td>${record.from}</td>
-  <td>${record.name}</td>
-  <td>${record.id}</td>
-      `;
-      if (record.from === 'בסיס') {
-        row.querySelector('td:nth-child(2)').style.backgroundColor = 'CCD1D1';
-      } else {
-        row.querySelector('td:nth-child(2)').style.backgroundColor = '#5490ED';
-      }
-      tableBody.appendChild(row);
-    });
-  }
-}
-
-function updateFromField() {
-    var toField = document.getElementById("to");
-    var fromField = document.getElementById("from");
-
-    if (toField.value === "בסיס") {
-      fromField.value = "בית";
-    }
-    if (toField.value === "בית") {
-      fromField.value = "בסיס";
-    }
-    
-  }
-
-  function updateToField() {
-    var toField = document.getElementById("to");
-    var fromField = document.getElementById("from");
-
-    if (fromField.value === "בסיס") {
-      toField.value = "בית";
-    }
-    if (fromField.value === "בית") {
-      toField.value = "בסיס";
-    }
-  }
-  const exportButton = document.getElementById('btn-export');
-
-const table = document.getElementById('recordsTable');
-
-exportButton.addEventListener('click', () => {
-  /* Create worksheet from HTML DOM TABLE */
-  const wb = XLSX.utils.table_to_book(table, {sheet: 'sheet-1'});
-
-  /* Export to file (start a download) */
-  XLSX.writeFile(wb, 'MyTable.xlsx');
-});
-function showTime() {
-  var date = new Date();
-  var options = {
-    timeZone: "Asia/Jerusalem",
-    hour12: false,
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  };
-  var time = date.toLocaleTimeString("en-US", options);
-  
-  document.getElementById("MyClockDisplay").innerText = time;
-  document.getElementById("MyClockDisplay").textContent = time;
-
-  setTimeout(showTime, 1000);
-}
-
-showTime();
-function generatePassword() {
-  var today = new Date(); 
-  var day = today.getDate(); 
-  var month = today.getMonth() + 1; 
-  var year = today.getFullYear(); 
-
-  var password = day.toString() + month.toString() + year.toString() + "123";
-  return password;
-}
-document.addEventListener("DOMContentLoaded", function() {
-  var linkButton = document.querySelector(".footer-links a:first-child");
-  var popup = document.createElement("div");
-  popup.className = "popup";
-  popup.innerHTML = `
-  <center><h2 class="popup-title">Website Information</h2></center>
-        <p class="popup-body">
-          This website includes the following features:
-          <ul>
-            <li><i class="fas fa-mobile-alt"></i> Responsive design and user-friendly interfaces</li>
-            <li><i class="fas fa-check-circle"></i> Form with validation and submission via JavaScript</li>
-            <li><i class="fas fa-window-maximize"></i> Modals/popups created with JavaScript</li>
-            <li><i class="far fa-clock"></i> Real-time clock using JavaScript</li>
-            <li><i class="fas fa-magic"></i> Animations with CSS @keyframes</li>
-          </ul>
-          Technologies used:
-          <ul>
-            <li><i class="fab fa-html5"></i> Frontend: HTML5, CSS3, JavaScript, Bootstrap</li>
-            <li><i class="fas fa-server"></i> Backend: Supabase</li>
-            <li><i class="fas fa-database"></i> Database: Supabase Postgres</li>
-            <li><i class="fas fa-paint-brush"></i> Design: Custom CSS styles, Bootstrap</li>
-            <li><i class="fab fa-github"></i> Hosting: GitHub Pages</li>
-          </ul>
+    <!-- Footer -->
+    <footer class="footer">
+        <ul class="footer-links">
+            <li>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#aboutModal">
+                    <i class="fas fa-info-circle"></i> אודות האתר
+                </a>
+            </li>
+            <li>
+                <a href="upsert.html">
+                    <i class="fas fa-edit"></i> עדכון רשומות
+                </a>
+            </li>
+            <li>
+                <a href="https://waze.com/ul/hsv8tt9q7v">
+                    <img src="https://www.zivltd.com/wp-content/uploads/2016/04/waze.svg" alt="Waze" style="height: 20px;">
+                    ניווט ליחידה
+                </a>
+            </li>
+        </ul>
+        <p id="by-credits" class="text-white text-center mt-3">
+            By Roei Redler &copy; 2024
         </p>
-        <center style="display: none;"><a href="#"><img class="popup-image" src="https://www.stickerli.co.il/cdn/shop/files/kiss-cut-stickers-white-5.5x5.5-default-64720e608e901.jpg?v=1685196389" alt="Image"></a></center>
-    <span class='popup-close'>x</span>
-  `;
-  linkButton.addEventListener("click", function(event) {
-    event.preventDefault();
-    document.body.appendChild(popup);
-    document.addEventListener("click", closePopupOutside);
-  });
+    </footer>
 
-  function closePopupOutside(event) {
-    if (!popup.contains(event.target) && event.target !== linkButton) {
-      document.body.removeChild(popup);
-      document.removeEventListener("click", closePopupOutside);
-    }
-  }
+    <!-- About Modal -->
+    <div class="modal fade" id="aboutModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">אודות האתר</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>תכונות האתר:</h6>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-mobile-alt me-2"></i> עיצוב רספונסיבי וממשק ידידותי למשתמש</li>
+                        <li><i class="fas fa-check-circle me-2"></i> טופס עם ולידציה ושליחה</li>
+                        <li><i class="fas fa-clock me-2"></i> שעון זמן אמת</li>
+                        <li><i class="fas fa-table me-2"></i> טבלת נתונים דינמית</li>
+                    </ul>
+                    <h6>טכנולוגיות:</h6>
+                    <ul class="list-unstyled">
+                        <li><i class="fab fa-html5 me-2"></i> HTML5, CSS3, JavaScript</li>
+                        <li><i class="fab fa-bootstrap me-2"></i> Bootstrap 5</li>
+                        <li><i class="fas fa-database me-2"></i> Supabase</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 
-  document.addEventListener("click", function(event) {
-    if (event.target.classList.contains("popup-close")) {
-      document.body.removeChild(popup);
-      document.removeEventListener("click", closePopupOutside);
-    }
-  });
-});
-  </script>
-      <script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>
-      <script type="text/javascript">
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "jamf2i6cwu");
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>
+    
+    <script>
+        // Clock Function
+        function showTime() {
+            const date = new Date();
+            const options = {
+                timeZone: "Asia/Jerusalem",
+                hour12: false,
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit"
+            };
+            const time = date.toLocaleTimeString("en-US", options);
+            document.getElementById("MyClockDisplay").textContent = time;
+            setTimeout(showTime, 1000);
+        }
+        showTime();
+
+        // Form Submission
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const submitBtn = document.getElementById("submitBtn");
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>שולח...';
+
+            const formData = new FormData(this);
+            const jsonData = Object.fromEntries(formData.entries());
+
+            fetch('https://sqvbrekjhnvlwxrcopxn.supabase.co/rest/v1/records', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNxdmJyZWtqaG52bHd4cmNvcHhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY5ODU2MjgsImV4cCI6MjA1MjU2MTYyOH0.jH0caP_NL709STFgu7SAvQsPqC3XTp4F-ehBV7jeH_4',
+'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNxdmJyZWtqaG52bHd4cmNvcHhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY5ODU2MjgsImV4cCI6MjA1MjU2MTYyOH0.jH0caP_NL709STFgu7SAvQsPqC3XTp4F-ehBV7jeH_4`
+                },
+                body: JSON.stringify(jsonData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    submitBtn.classList.remove('btn-primary');
+                    submitBtn.classList.add('btn-success');
+                    submitBtn.innerHTML = '<i class="fas fa-check me-2"></i>נשלח בהצלחה';
+                    
+                    // Show success toast
+                    const toast = new bootstrap.Toast(document.getElementById('successToast'));
+                    toast.show();
+                    
+                    // Reset form after delay
+                    setTimeout(() => {
+                        this.reset();
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove('btn-success');
+                        submitBtn.classList.add('btn-primary');
+                        submitBtn.innerHTML = 'שלח פרטים';
+                        fetchRecords();
+                    }, 2000);
+                } else {
+                    throw new Error('שליחת הנתונים נכשלה');
+                }
+            })
+            .catch(error => {
+                submitBtn.classList.remove('btn-primary');
+                submitBtn.classList.add('btn-danger');
+                submitBtn.innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i>שגיאה בשליחה';
+                
+                // Show error toast
+                const toast = new bootstrap.Toast(document.getElementById('errorToast'));
+                toast.show();
+                
+                setTimeout(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('btn-danger');
+                    submitBtn.classList.add('btn-primary');
+                    submitBtn.innerHTML = 'שלח פרטים';
+                }, 2000);
+                
+                console.error('Error:', error);
+            });
+        });
+
+        // Fetch Records Function
+        function fetchRecords() {
+            const url = 'https://sqvbrekjhnvlwxrcopxn.supabase.co/rest/v1/records?select=*&order=created_at.desc';
+            const apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNxdmJyZWtqaG52bHd4cmNvcHhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY5ODU2MjgsImV4cCI6MjA1MjU2MTYyOH0.jH0caP_NL709STFgu7SAvQsPqC3XTp4F-ehBV7jeH_4';
+
+            fetch(url, {
+                headers: {
+                    'apikey': apiKey,
+                    'Authorization': `Bearer ${apiKey}`
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector('#recordsTable tbody');
+                tableBody.innerHTML = '';
+                groupTableByDays(data, tableBody);
+            })
+            .catch(error => console.error('Error fetching records:', error));
+        }
+
+        // Group Records by Days
+        function groupTableByDays(records, tableBody) {
+            const recordsByDay = {};
+            records.forEach(record => {
+                const createdAt = new Date(record.created_at);
+                const dayKey = `${createdAt.getUTCDate()}-${createdAt.getUTCMonth() + 1}-${createdAt.getUTCFullYear()}`;
+                
+                if (!recordsByDay[dayKey]) {
+                    recordsByDay[dayKey] = [];
+                }
+                recordsByDay[dayKey].push(record);
+            });
+
+            Object.entries(recordsByDay).forEach(([dayKey, dayRecords]) => {
+                // Add day header
+                const groupRow = document.createElement('tr');
+                groupRow.innerHTML = `<td colspan="4" class="day-group">${dayKey}</td>`;
+                tableBody.appendChild(groupRow);
+
+                // Add day records
+                dayRecords.forEach(record => {
+                    const createdAt = new Date(record.created_at);
+                    const timeString = createdAt.toLocaleTimeString('he-IL', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit'
+                    });
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${timeString}</td>
+                        <td class="location-cell ${record.from === 'בסיס' ? 'base' : 'home'}">${record.from}</td>
+                        <td>${record.name}</td>
+                        <td>${record.id || ''}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            });
+        }
+
+        // Export to Excel
+        document.getElementById('btn-export').addEventListener('click', () => {
+            const wb = XLSX.utils.table_to_book(document.getElementById('recordsTable'), {
+                sheet: 'נוכחות'
+            });
+            XLSX.writeFile(wb, `נוכחות-${new Date().toLocaleDateString('he-IL')}.xlsx`);
+        });
+
+        // Location Field Updates
+        function updateToField() {
+            const fromField = document.getElementById('from');
+            const fromValue = fromField.value;
+            
+            // Add animation class
+            fromField.classList.add('changed');
+            setTimeout(() => fromField.classList.remove('changed'), 500);
+        }
+
+        // Initialize tooltips and popovers
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize all tooltips
+            const tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+            tooltips.forEach(tooltip => new bootstrap.Tooltip(tooltip));
+
+            // Initialize all popovers
+            const popovers = document.querySelectorAll('[data-bs-toggle="popover"]');
+            popovers.forEach(popover => new bootstrap.Popover(popover));
+
+            // Fetch initial records
+            fetchRecords();
+        });
+
+        // Auto-refresh records every 5 minutes
+        setInterval(fetchRecords, 300000);
     </script>
-</body>
 
-<br><br>
-<div id="bthn" lang="he"></div><script>
-  (function () {
-     var script = document.createElement("script");
-     script.type = "text/javascript";
-     script.src = "https://bringthemhomenow.net/1.0.8/hostages-ticker.js";
-     script.setAttribute(
-       "integrity",
-       "sha384-jQVW0E+wZK5Rv1fyN+b89m7cYY8txH4s3uShzHf1T51hdBTPo7yKL6Yizgr+Gp8C"
-     );
-     script.setAttribute("crossorigin", "anonymous");
-     document.getElementsByTagName("head")[0].appendChild(script);
-   })();
-  </script>
-<footer class="footer">
-  <ul class="footer-links">
-    <li><a href="#"><i class="bi bi-house-door-fill"></i> אודות האתר</a></li>
-    <li><a href="upsert.html"><i class="bi bi-envelope-fill"></i> עדכון רשומות</a></li>
-    <li>
-      <a href="https://waze.com/ul/hsv8tt9q7v">
-        <img src="https://www.zivltd.com/wp-content/uploads/2016/04/waze.svg" alt="Navigation Image" style="height: 20px; width: 20px; margin-right: 5px;">
-        ניווט ליחידה
-      </a>
-    </li>
-  </ul>
-</footer>
-<p id="by-credits">By Roei Redler &copy</p>
+    <!-- Toast Notifications -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="successToast" class="toast align-items-center text-white bg-success border-0" role="alert">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="fas fa-check-circle me-2"></i>הנתונים נשלחו בהצלחה
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+        
+        <div id="errorToast" class="toast align-items-center text-white bg-danger border-0" role="alert">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="fas fa-exclamation-circle me-2"></i>שגיאה בשליחת הנתונים
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
